@@ -10,6 +10,26 @@
     <title>Hot Restaurant</title>
 </head>
 <body>
+        <script type="text/javascript">
+            $("#add-btn").on("click", function(event) {
+              event.preventDefault();
+        
+              var newReso = {
+                name: $("#name").val().trim(),
+                email: $("#email").val().trim(),
+                number: $("#phoneNumber").val().trim(),
+                uniqueId: $("#unique_ID").val().trim()
+              };
+        
+              $.post("/api/reservations", newReso)
+                .then(function(data) {
+                  console.log(data);
+                  alert("Adding reservation...");
+                });
+        
+            });
+        
+        </script>
     
 </body>
 </html>
