@@ -36,7 +36,7 @@ var connection = mysql.createConnection({
   connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
-    addTable();
+    // addTable();
   });
 
 
@@ -106,7 +106,7 @@ function readDB() {
     if (err) throw err;
     // Log all results of the SELECT statement
     console.log(res);
-    connection.end();
+    // connection.end();
   });
 }
 
