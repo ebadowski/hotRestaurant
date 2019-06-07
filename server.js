@@ -1,7 +1,7 @@
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
-const api = require("api.js")
+const api = require("./api")
 const app = express();
 const PORT = 3000;
 
@@ -23,5 +23,3 @@ app.get("/", function(req, res) {
   app.get("/tables", function(req, res) {
     res.sendFile(path.join(__dirname, "tables.html"))
   });
-
-  
