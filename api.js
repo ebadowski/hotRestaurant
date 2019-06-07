@@ -39,7 +39,7 @@ function dbConnect() {
     console.log("connected as id " + connection.threadId + "\n");
     addTable();
   });
-}
+
 
 function addTable() {
   console.log("Inserting customers in DB...\n");
