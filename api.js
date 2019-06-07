@@ -14,24 +14,24 @@ var connection = mysql.createConnection({
   database: "tabledb"
 });
 
-var newReso = {
-  name: $("#inputName").val().trim(),
-  number: $("#inputPhone").val().trim(),
-  email: $("#inputEmail").val().trim(),
-};
+// var newReso = {
+//   name: $("#inputName").val().trim(),
+//   number: $("#inputPhone").val().trim(),
+//   email: $("#inputEmail").val().trim(),
+// };
 
-$("#add-btn").on("click", function (event) {
-  event.preventDefault();
+// $("#add-btn").on("click", function (event) {
+//   event.preventDefault();
 
-  $.post("/api/reservations", newReso)
-    .then(function (data) {
-      console.log(data);
-      alert("Adding reservation...");
-    });
+//   $.post("/api/reservations", newReso)
+//     .then(function (data) {
+//       console.log(data);
+//       alert("Adding reservation...");
+//     });
 
-    dbConnect();
+//     dbConnect();
 
-});
+// });
 
 function dbConnect() {
   connection.connect(function (err) {
@@ -108,4 +108,7 @@ function readDB() {
     console.log(res);
     connection.end();
   });
+}
+module.exports = {
+  readDB: readDB
 }
