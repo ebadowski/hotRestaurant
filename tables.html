@@ -35,10 +35,41 @@
 
 
     <script type="text/javascript">
+        // var data = [{ name: 'Steve' },
+        //     { name: 'Kyle' },
+        //     {name: 'Kayla'},
+        //     {name: 'Jen'},            
+        //     { name: 'Jimmy' },
+        //     {name: 'John'},
+        //     {name: 'Sam'} 
+        //     ]
 
-        buildWaitlist();
-        postToRes('Steve');
-        postToWait('Kyle')
+            
+
+
+        $.get("/api/reservations", function (data) {
+            var reserv = data;
+            var wait = [];
+
+            if (data.length > 5) {
+                wait = data.slice(5);
+                reserv = data.slice(0, 5);
+                $('#filled').text("Filled");
+                buildWaitlist();
+            }
+
+            for (var i in reserv) {
+                postToRes(reserv[i].name)
+            }
+
+            if (wait) {
+                for (var j in wait) {
+                    postToWait(wait[j].name)
+                }
+                $('#numWait').text(wait.length + " in waitlist");
+            }
+
+        });
 
 
         function postToRes(name) {
@@ -65,18 +96,7 @@
             container.appendTo('#body');
         }
 
-        $.get("/api/reservations", function (data) {
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i]);
-                var listGroupItem = $("<li class='list-group-item'>");
 
-                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
-                listGroupItem.append($("<h3>").text("Number: " + data[i].number));
-                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
-
-                $("#reservation-section").append(listGroupItem);
-            }
-        });
     </script>
 
 </body>
