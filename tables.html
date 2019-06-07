@@ -57,9 +57,8 @@
             var listGroupItem = $("<li class='list-group-item'>");
   
             listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+            listGroupItem.append($("<h3>").text("Number: " + data[i].number));
             listGroupItem.append($("<h3>").text("Email: " + data[i].email));
-            listGroupItem.append($("<h3>").text("Number: " + data[i].age));
-            listGroupItem.append($("<h3>").text("Unique ID: " + data[i].forcePoints));
   
             $("#reservation-section").append(listGroupItem);
           }
