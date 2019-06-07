@@ -37,28 +37,5 @@
         </div>
         <button type="submit" class="btn btn-primary" id="submit">Submit</button>
       </form>
-
-      <script type="text/javascript">
-        $("#add-btn").on("click", function(event) {
-          event.preventDefault();
-    
-          var newReso = {
-            name: $("#inputName").val().trim(),
-            number: $("#inputPhone").val().trim(),
-            email: $("#inputEmail").val().trim(),
-          };
-    
-          $.post("/api/reservations", newReso)
-            .then(function(data) {
-              console.log(data);
-              alert("Adding reservation...");
-            });
-    
-        });
-    
-    </script>
-
-
-
 </body>
 </html>

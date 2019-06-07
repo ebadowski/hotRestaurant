@@ -14,26 +14,47 @@ var connection = mysql.createConnection({
   database: "tabledb"
 });
 
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log("connected as id " + connection.threadId + "\n");
-  addTable();
+var newReso = {
+  name: $("#inputName").val().trim(),
+  number: $("#inputPhone").val().trim(),
+  email: $("#inputEmail").val().trim(),
+};
+
+$("#add-btn").on("click", function (event) {
+  event.preventDefault();
+
+  $.post("/api/reservations", newReso)
+    .then(function (data) {
+      console.log(data);
+      alert("Adding reservation...");
+    });
+
+    dbConnect();
+
 });
+
+function dbConnect() {
+  connection.connect(function (err) {
+    if (err) throw err;
+    console.log("connected as id " + connection.threadId + "\n");
+    addTable();
+  });
+}
 
 function addTable() {
   console.log("Inserting customers in DB...\n");
   var query = connection.query(
     "INSERT INTO customer_info SET ?",
     {
-      customerName: "Test Dummy",
-      customerEmail: "testdummy@email.com",
-      phoneNumber: 77777777
+      customerName: newReso.name,
+      customerEmail: newReso.email,
+      phoneNumber: newReso.number
     },
-    function(err, res) {
+    function (err, res) {
       console.log(res.affectedRows + " table added!");
       // Call updateProduct AFTER the INSERT completes
-    //   updateProduct();
-    readDB();
+      //   updateProduct();
+      readDB();
     }
   );
 
@@ -81,7 +102,7 @@ function addTable() {
 
 function readDB() {
   console.log("Selecting all customers...\n");
-  connection.query("SELECT * FROM customer_info", function(err, res) {
+  connection.query("SELECT * FROM customer_info", function (err, res) {
     if (err) throw err;
     // Log all results of the SELECT statement
     console.log(res);
