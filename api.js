@@ -33,12 +33,12 @@ var connection = mysql.createConnection({
 
 // });
 
-function dbConnect() {
   connection.connect(function (err) {
     if (err) throw err;
     console.log("connected as id " + connection.threadId + "\n");
     addTable();
   });
+
 
 
 function addTable() {
@@ -109,6 +109,7 @@ function readDB() {
     connection.end();
   });
 }
+
 module.exports = {
   readDB: readDB
 }
