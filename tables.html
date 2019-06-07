@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,61 +10,75 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <title>Current Reservations</title>
 </head>
-<body>
+
+<body id="body">
     <div class="jumbotron" style="text-align: center">
         <h1 class="display-4">Hot Restaurant</h1>
         <h2 class="lead">Current Reservations</p>
-        <hr class="my-4">
-        <p id="tablesLeft"></p>
-        <a class="btn btn-primary" href="#" role="button" id="home-btn">Home</a>
-        <button type="button" class="btn btn-danger" id="res-btn">Make Reservation</button>
-      </div>
+            <hr class="my-4">
+            <p id="tablesLeft"></p>
+            <a class="btn btn-primary" href="#" role="button" id="home-btn">Home</a>
+            <button type="button" class="btn btn-danger" id="res-btn">Make Reservation</button>
+    </div>
 
-      <div class="card text-center" style="padding-bottom: 25px">
+    <div class="card text-center" style="padding-bottom: 25px">
         <div class="card-header">
-          Reservations
+            Reservations
         </div>
-        <div class="card-body">
-          <h5 class="card-title">Test Placeholder 1</h5>
+        <div id="reservations">
         </div>
-        <div class="card-body">
-            <h5 class="card-title">Test Placeholder 2</h5>
-          </div>
+
         <div class="card-footer text-muted" id="filled">
-          Full or not full
+            Not Full
         </div>
-      </div>
+    </div>
 
-      <div class="card text-center">
-        <div class="card-header">
-          Waitlist
-        </div>
-        <div class="card-body">
-          <h5 class="card-title">Show me only if you have to</h5>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">Build me in JS function</h5>
-          </div>
-        <div class="card-footer text-muted" id="filled">
-          Number in waitlist
-        </div>
-      </div>
 
-      <script type="text/javascript">
+    <script type="text/javascript">
 
-        $.get("/api/reservations", function(data) {
-          for (var i = 0; i < data.length; i++) {
-            console.log(data[i]);
-            var listGroupItem = $("<li class='list-group-item'>");
-  
-            listGroupItem.append($("<h2>").text("Name: " + data[i].name));
-            listGroupItem.append($("<h3>").text("Number: " + data[i].number));
-            listGroupItem.append($("<h3>").text("Email: " + data[i].email));
-  
-            $("#reservation-section").append(listGroupItem);
-          }
+        buildWaitlist();
+        postToRes('Steve');
+        postToWait('Kyle')
+
+
+        function postToRes(name) {
+            var div = $('<div class="card-body">');
+            var h5 = $('<h5 class="card-title">').text(name)
+            h5.appendTo(div);
+            div.appendTo('#reservations');
+        }
+        function postToWait(name) {
+            var div = $('<div class="card-body">');
+            var h5 = $('<h5 class="card-title">').text(name)
+            h5.appendTo(div);
+            div.appendTo('#waitlist');
+        }
+        function buildWaitlist() {
+            var container = $('<div class="card text-center">');
+            var waitlist = $('<div class="card-header">').text("Waitlist");
+            var div = $('<div id="waitlist">');
+            var counterDiv = $('<div class="card-footer text-muted" id="numWait">').text('Put num here');
+
+            waitlist.appendTo(container);
+            div.appendTo(container);
+            counterDiv.appendTo(container);
+            container.appendTo('#body');
+        }
+
+        $.get("/api/reservations", function (data) {
+            for (var i = 0; i < data.length; i++) {
+                console.log(data[i]);
+                var listGroupItem = $("<li class='list-group-item'>");
+
+                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+                listGroupItem.append($("<h3>").text("Number: " + data[i].number));
+                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+
+                $("#reservation-section").append(listGroupItem);
+            }
         });
-      </script>
-      
+    </script>
+
 </body>
+
 </html>
