@@ -7,24 +7,64 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <title>Hot Restaurant</title>
+    <title>Current Reservations</title>
 </head>
 <body>
-        <script type="text/javascript">
+    <div class="jumbotron" style="text-align: center">
+        <h1 class="display-4">Hot Restaurant</h1>
+        <h2 class="lead">Current Reservations</p>
+        <hr class="my-4">
+        <p id="tablesLeft"></p>
+        <a class="btn btn-primary" href="#" role="button" id="home-btn">Home</a>
+        <button type="button" class="btn btn-danger" id="res-btn">Make Reservation</button>
+      </div>
 
-            $.get("/api/reservations", function(data) {
-              for (var i = 0; i < data.length; i++) {
-                console.log(data[i]);
-                var listGroupItem = $("<li class='list-group-item'>");
+      <div class="card text-center" style="padding-bottom: 25px">
+        <div class="card-header">
+          Reservations
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Test Placeholder 1</h5>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Test Placeholder 2</h5>
+          </div>
+        <div class="card-footer text-muted" id="filled">
+          Full or not full
+        </div>
+      </div>
+
+      <div class="card text-center">
+        <div class="card-header">
+          Waitlist
+        </div>
+        <div class="card-body">
+          <h5 class="card-title">Show me only if you have to</h5>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Build me in JS function</h5>
+          </div>
+        <div class="card-footer text-muted" id="filled">
+          Number in waitlist
+        </div>
+      </div>
+
+      <script type="text/javascript">
+
+        $.get("/api/reservations", function(data) {
+          for (var i = 0; i < data.length; i++) {
+            console.log(data[i]);
+            var listGroupItem = $("<li class='list-group-item'>");
+  
+            listGroupItem.append($("<h2>").text("Name: " + data[i].name));
+            listGroupItem.append($("<h3>").text("Email: " + data[i].email));
+            listGroupItem.append($("<h3>").text("Number: " + data[i].age));
+            listGroupItem.append($("<h3>").text("Unique ID: " + data[i].forcePoints));
+  
+            $("#reservation-section").append(listGroupItem);
+          }
+        });
+      </script>
       
-                listGroupItem.append($("<h2>").text("Name: " + data[i].name));
-                listGroupItem.append($("<h3>").text("Email: " + data[i].email));
-                listGroupItem.append($("<h3>").text("Number: " + data[i].age));
-                listGroupItem.append($("<h3>").text("Unique ID: " + data[i].forcePoints));
-      
-                $("#reservation-section").append(listGroupItem);
-              }
-            });
-          </script>
 </body>
 </html>

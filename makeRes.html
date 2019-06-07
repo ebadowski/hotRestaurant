@@ -10,26 +10,56 @@
     <title>Hot Restaurant</title>
 </head>
 <body>
-        <script type="text/javascript">
-            $("#add-btn").on("click", function(event) {
-              event.preventDefault();
-        
-              var newReso = {
-                name: $("#name").val().trim(),
-                email: $("#email").val().trim(),
-                number: $("#phoneNumber").val().trim(),
-                uniqueId: $("#unique_ID").val().trim()
-              };
-        
-              $.post("/api/reservations", newReso)
-                .then(function(data) {
-                  console.log(data);
-                  alert("Adding reservation...");
-                });
-        
-            });
-        
-        </script>
+    <div class="jumbotron" style="text-align: center">
+        <h1 class="display-4">Hot Restaurant</h1>
+        <h2 class="lead">Make a reservation</p>
+        <hr class="my-4">
+        <p id="tablesLeft"></p>
+        <a class="btn btn-primary" href="#" role="button" id="home-btn">Home</a>
+        <a class="btn btn-primary" href="#" role="button" id="tables-btn">View Reservations</a>
+      </div>
+
+
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="inputName">Name</label>
+            <input type="text" class="form-control" id="inputName" placeholder="Email">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputPhone">Phone Number</label>
+            <input type="text" class="form-control" id="inputPhone" placeholder="123.456.7890">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="inputEmail">Email</label>
+          <input type="text" class="form-control" id="inputEmail" placeholder="email@email.com">
+        </div>
+        <button type="submit" class="btn btn-primary" id="submit">Submit</button>
+      </form>
+
+      <script type="text/javascript">
+        $("#add-btn").on("click", function(event) {
+          event.preventDefault();
     
+          var newReso = {
+            name: $("#name").val().trim(),
+            email: $("#email").val().trim(),
+            number: $("#phoneNumber").val().trim(),
+            uniqueId: $("#unique_ID").val().trim()
+          };
+    
+          $.post("/api/reservations", newReso)
+            .then(function(data) {
+              console.log(data);
+              alert("Adding reservation...");
+            });
+    
+        });
+    
+    </script>
+
+
+
 </body>
 </html>
