@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,9 +8,97 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <title>Hot Restaurant</title>
+    <title>Current Reservations</title>
 </head>
-<body>
-    
+
+<body id="body">
+    <div class="jumbotron" style="text-align: center">
+        <h1 class="display-4">Hot Restaurant</h1>
+        <h2 class="lead">Current Reservations</p>
+            <hr class="my-4">
+            <p id="tablesLeft"></p>
+            <a class="btn btn-primary" href="/" role="button" id="home-btn">Home</a>
+            <a type="button" href="/reserve" class="btn btn-danger" id="res-btn">Make Reservation</a>
+    </div>
+
+    <div class="card text-center" style="padding-bottom: 25px">
+        <div class="card-header">
+            Reservations
+        </div>
+        <div id="reservations">
+        </div>
+
+        <div class="card-footer text-muted" id="filled">
+            Not Full
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+        // var data = [{ name: 'Steve' },
+        //     { name: 'Kyle' },
+        //     {name: 'Kayla'},
+        //     {name: 'Jen'},            
+        //     { name: 'Jimmy' },
+        //     {name: 'John'},
+        //     {name: 'Sam'} 
+        //     ]
+
+            
+
+
+        $.get("/api/reservations", function (data) {
+            var reserv = data;
+            var wait = [];
+
+            if (data.length > 5) {
+                wait = data.slice(5);
+                reserv = data.slice(0, 5);
+                $('#filled').text("Filled");
+                buildWaitlist();
+            }
+
+            for (var i in reserv) {
+                postToRes(reserv[i].customerName)
+            }
+
+            if (wait) {
+                for (var j in wait) {
+                    postToWait(wait[j].customerName)
+                }
+                $('#numWait').text(wait.length + " in waitlist");
+            }
+
+        });
+
+
+        function postToRes(name) {
+            var div = $('<div class="card-body">');
+            var h5 = $('<h5 class="card-title">').text(name)
+            h5.appendTo(div);
+            div.appendTo('#reservations');
+        }
+        function postToWait(name) {
+            var div = $('<div class="card-body">');
+            var h5 = $('<h5 class="card-title">').text(name)
+            h5.appendTo(div);
+            div.appendTo('#waitlist');
+        }
+        function buildWaitlist() {
+            var container = $('<div class="card text-center">');
+            var waitlist = $('<div class="card-header">').text("Waitlist");
+            var div = $('<div id="waitlist">');
+            var counterDiv = $('<div class="card-footer text-muted" id="numWait">').text('Put num here');
+
+            waitlist.appendTo(container);
+            div.appendTo(container);
+            counterDiv.appendTo(container);
+            container.appendTo('#body');
+        }
+
+
+    </script>
+
 </body>
+
 </html>
